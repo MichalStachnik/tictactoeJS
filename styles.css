@@ -6,11 +6,24 @@
     width: 600px;
     margin: 20vh auto;
     height: 60vh;
+    overflow: hidden;
 }
 #grid{
     display: flex;
     flex-wrap: wrap;
     height: 100%;
+}
+#finished{
+    text-align: center;
+    position: relative;
+    top: 20vh;
+}
+#finished.active{
+    top: -35vh;
+    transition: top .75s;
+}
+#grid.none{
+    display: none;
 }
 .box{
     width: 33.33333%;

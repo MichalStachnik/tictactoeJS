@@ -1,12 +1,14 @@
-const zero = document.getElementById('zero')
-const one = document.getElementById('one')
-const two = document.getElementById('two')
-const three = document.getElementById('three')
-const four = document.getElementById('four')
-const five = document.getElementById('five')
-const six = document.getElementById('six')
-const seven = document.getElementById('seven')
-const eight = document.getElementById('eight')
+const zero              = document.getElementById('zero')
+const one               = document.getElementById('one')
+const two               = document.getElementById('two')
+const three             = document.getElementById('three')
+const four              = document.getElementById('four')
+const five              = document.getElementById('five')
+const six               = document.getElementById('six')
+const seven             = document.getElementById('seven')
+const eight             = document.getElementById('eight')
+const finished          = document.getElementById('finished')
+const finishedTarget    = document.getElementById('finishedTarget')
 
 var board = 
 [
@@ -15,18 +17,12 @@ var board =
     ['', '', '']
 ]
 var playerOne = {
-    sign : 'X',
-    turn : true
+    sign : 'X'
 }
 var playerTwo = {
-    sign : 'O',
-    turn : false
+    sign : 'O'
 }
-//problem is comp turn only fires on second click, needs to run after player1 goes
-//and player1s input needs to wait
-//OR could just run after first evaluate
 function clickFunction(p1, p2, node, pos){
-    // if(p1.turn){
         node.innerHTML = playerOne.sign
         if(pos <= 2){
             board[0][pos] = playerOne.sign
@@ -39,13 +35,13 @@ function clickFunction(p1, p2, node, pos){
             pos = pos % 6
             board[2][pos] = playerOne.sign
         }
-        // playerOne.turn = !playerOne.turn
-        // playerTwo.turn = !playerTwo.turn
         console.log(board)
-        evaluate(board, playerOne)
-
-        //player1 turn done
-        //start computer turn
+        let isOver = evaluate(board, playerOne)
+        if(isOver[6]){
+            finished.className += 'active'
+            finishedTarget.innerHTML = `You have won with [${isOver[0]},${isOver[1]}], [${isOver[2]},${isOver[3]}], & [${isOver[4]},${isOver[5]}]`
+        }
+        //player1 turn done, start computer turn
         var rand1, rand2
         function makeRand(){
             rand1 = Math.floor(Math.random() * 3)
@@ -61,113 +57,64 @@ function clickFunction(p1, p2, node, pos){
         //update html dom node
         let nodes = document.querySelectorAll('.box')
         if(rand1 == 0){
-            console.log('firing')
             let nodeToUpdate = nodes[parseInt(rand2)]
-            console.log('nodeToUpdate', nodeToUpdate)
             nodeToUpdate.innerHTML = playerTwo.sign
-            console.log('nodeToUpdate.innerHTML', nodeToUpdate.innerHTML)
         }
         else if(rand1 == 1){
-            console.log('firing')
             let nodeToUpdate = nodes[parseInt(rand2 + 3)]
-            console.log('nodeToUpdate', nodeToUpdate)
             nodeToUpdate.innerHTML = playerTwo.sign
-            console.log('nodeToUpdate.innerHTML', nodeToUpdate.innerHTML)
         }
         else if(rand1 == 2){
-            console.log('firing')
             let nodeToUpdate = nodes[parseInt(rand2 + 6)]
-            console.log('nodeToUpdate', nodeToUpdate)
             nodeToUpdate.innerHTML = playerTwo.sign
-            console.log('nodeToUpdate.innerHTML', nodeToUpdate.innerHTML)
         }
-        //update board with player2 sign
         board[rand1][rand2] = playerTwo.sign
-        //evaluate to see if player2 won
-    // }
-    // else if(p2.turn){
-    //     // compTurn(board, playerTwo)
-    //     node.innerHTML = playerTwo.sign
-    //     var rand1, rand2
-    //     function makeRand(){
-    //         rand1 = Math.floor(Math.random() * 3)
-    //         rand2 = Math.floor(Math.random() * 3)
-    //     }
-    //     makeRand()
-    //     var isTrue = true
-    //     while(isTrue){
-    //         //if there is something there returns true
-    //         if(board[rand1][rand2].length != 0){
-    //             makeRand()
-    //         }
-    //         else{
-    //             board[rand1][rand2] = playerTwo.sign
-    //             isTrue = false
-    //         }
-    //     }
-
-    //     playerOne.turn = !playerOne.turn
-    //     playerTwo.turn = !playerTwo.turn
-    //     evaluate(board, playerTwo)
-    // }
+        let isOver = evaluate(board, playerTwo)
+        if(isOver[6]){
+            finished.className += 'active'
+            finishedTarget.innerHTML = `Computer has won with [${isOver[0]},${isOver[1]}], [${isOver[2]},${isOver[3]}], & [${isOver[4]},${isOver[5]}]`
+        }
 }
-//or can return the board
-// function compTurn(theBoard, p2){
-    
-//     //keep looping until you find empty node
-//     var isTrue = true
-//     while(isTrue){
-//         //returns true if there is something there, so run again
-//         if(theBoard[rand1][rand2].length != 0){
-//             makeRand()
-//         }
-//         //else put comp players sign into node
-//         else{
-//             theBoard[rand1][rand2] = p2.sign
-//             return theBoard
-//             isTrue = false
-//         }
-//     }
-// }
-
 function evaluate(theBoard, player){
     //ROWS
     if(theBoard[0][0] == player.sign && theBoard[0][1] == player.sign && theBoard[0][2] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [0, 0, 0, 1, 0, 2, true]
     }
     else if(theBoard[1][0] == player.sign && theBoard[1][1] == player.sign && theBoard[1][2] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [1, 0, 1, 1, 1, 2, true]
     }
     else if(theBoard[2][0] == player.sign && theBoard[2][1] == player.sign && theBoard[2][2] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [2, 0, 2, 1, 2, 2, true]
     }
     //COLUMNS
     else if(theBoard[0][0] == player.sign && theBoard[1][0] == player.sign && theBoard[2][0] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [0, 0, 1, 0, 2, 0, true]
     }
     else if(theBoard[0][1] == player.sign && theBoard[1][1] == player.sign && theBoard[2][1] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [0, 1, 1, 1, 2, 1, true]
     }
     else if(theBoard[0][2] == player.sign && theBoard[1][2] == player.sign && theBoard[2][2] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [0, 2, 1, 2, 2, 2, true]
     }
     //DIAGONALS
     else if(theBoard[0][0] == player.sign && theBoard[1][1] == player.sign && theBoard[2][2] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [0, 0, 1, 1, 2, 2, true]
     }
     else if(theBoard[0][2] == player.sign && theBoard[1][1] == player.sign && theBoard[2][0] == player.sign){
-        console.log(theBoard)
-        console.log('we won')
+        console.log(`${player.sign} player won`)
+        return [0, 2, 1, 1, 2, 0, true]
+    }
+    else{
+        return false
     }
 }
-
 zero.onclick = function(){
     var myId = parseInt(zero.dataset.gridId)
     clickFunction(playerOne, playerTwo, zero, myId)
