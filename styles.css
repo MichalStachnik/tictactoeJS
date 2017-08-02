@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#app{
+    width: 600px;
+    margin: 20vh auto;
+    height: 60vh;
+}
+#grid{
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+.box{
+    width: 33.33333%;
+    box-sizing: border-box;
+    border: 1px solid lightseagreen;
+}
