@@ -22,12 +22,11 @@ var playerTwo = {
     sign : 'O',
     turn : false
 }
-
 //problem is comp turn only fires on second click, needs to run after player1 goes
-//, and player1s input needs to wait
+//and player1s input needs to wait
 //OR could just run after first evaluate
 function clickFunction(p1, p2, node, pos){
-    if(p1.turn){
+    // if(p1.turn){
         node.innerHTML = playerOne.sign
         if(pos <= 2){
             board[0][pos] = playerOne.sign
@@ -40,56 +39,96 @@ function clickFunction(p1, p2, node, pos){
             pos = pos % 6
             board[2][pos] = playerOne.sign
         }
-        playerOne.turn = !playerOne.turn
-        playerTwo.turn = !playerTwo.turn
+        // playerOne.turn = !playerOne.turn
+        // playerTwo.turn = !playerTwo.turn
         console.log(board)
         evaluate(board, playerOne)
 
-    }
-    else if(p2.turn){
-        // compTurn(board, playerTwo)
-        node.innerHTML = playerTwo.sign
+        //player1 turn done
+        //start computer turn
         var rand1, rand2
         function makeRand(){
             rand1 = Math.floor(Math.random() * 3)
             rand2 = Math.floor(Math.random() * 3)
         }
         makeRand()
-        var isTrue = true
-        while(isTrue){
-            //if there is something there
-            if(board[rand1][rand2].length != 0){
-                makeRand()
-            }
-            else{
-                board[rand1][rand2] = playerTwo.sign
-                isTrue = false
-            }
-        }
-
-        playerOne.turn = !playerOne.turn
-        playerTwo.turn = !playerTwo.turn
-        evaluate(board, playerTwo)
-    }
-}
-//or can return the board
-function compTurn(theBoard, p2){
-    
-    //keep looping until you find empty node
-    var isTrue = true
-    while(isTrue){
-        //returns true if there is something there, so run again
-        if(theBoard[rand1][rand2].length != 0){
+        //while there is something in visited node, make new randoms
+        while(board[rand1][rand2].length != 0){
+            console.log('tried', rand1, rand2)
+            console.log('but taken')
             makeRand()
         }
-        //else put comp players sign into node
-        else{
-            theBoard[rand1][rand2] = p2.sign
-            return theBoard
-            isTrue = false
+        //update html dom node
+        let nodes = document.querySelectorAll('.box')
+        if(rand1 == 0){
+            console.log('firing')
+            let nodeToUpdate = nodes[parseInt(rand2)]
+            console.log('nodeToUpdate', nodeToUpdate)
+            nodeToUpdate.innerHTML = playerTwo.sign
+            console.log('nodeToUpdate.innerHTML', nodeToUpdate.innerHTML)
         }
-    }
+        else if(rand1 == 1){
+            console.log('firing')
+            let nodeToUpdate = nodes[parseInt(rand2 + 3)]
+            console.log('nodeToUpdate', nodeToUpdate)
+            nodeToUpdate.innerHTML = playerTwo.sign
+            console.log('nodeToUpdate.innerHTML', nodeToUpdate.innerHTML)
+        }
+        else if(rand1 == 2){
+            console.log('firing')
+            let nodeToUpdate = nodes[parseInt(rand2 + 6)]
+            console.log('nodeToUpdate', nodeToUpdate)
+            nodeToUpdate.innerHTML = playerTwo.sign
+            console.log('nodeToUpdate.innerHTML', nodeToUpdate.innerHTML)
+        }
+        //update board with player2 sign
+        board[rand1][rand2] = playerTwo.sign
+        //evaluate to see if player2 won
+    // }
+    // else if(p2.turn){
+    //     // compTurn(board, playerTwo)
+    //     node.innerHTML = playerTwo.sign
+    //     var rand1, rand2
+    //     function makeRand(){
+    //         rand1 = Math.floor(Math.random() * 3)
+    //         rand2 = Math.floor(Math.random() * 3)
+    //     }
+    //     makeRand()
+    //     var isTrue = true
+    //     while(isTrue){
+    //         //if there is something there returns true
+    //         if(board[rand1][rand2].length != 0){
+    //             makeRand()
+    //         }
+    //         else{
+    //             board[rand1][rand2] = playerTwo.sign
+    //             isTrue = false
+    //         }
+    //     }
+
+    //     playerOne.turn = !playerOne.turn
+    //     playerTwo.turn = !playerTwo.turn
+    //     evaluate(board, playerTwo)
+    // }
 }
+//or can return the board
+// function compTurn(theBoard, p2){
+    
+//     //keep looping until you find empty node
+//     var isTrue = true
+//     while(isTrue){
+//         //returns true if there is something there, so run again
+//         if(theBoard[rand1][rand2].length != 0){
+//             makeRand()
+//         }
+//         //else put comp players sign into node
+//         else{
+//             theBoard[rand1][rand2] = p2.sign
+//             return theBoard
+//             isTrue = false
+//         }
+//     }
+// }
 
 function evaluate(theBoard, player){
     //ROWS
