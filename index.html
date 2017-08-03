@@ -5,10 +5,6 @@
     </head>
     <body>
         <div id="app">
-            <div id="choice">
-                <button id="x">X</button>
-                <button id="o">O</button>
-            </div>
             <div id="grid">
                 <div id="zero"  data-grid-id="0" class="box"></div>
                 <div id="one"   data-grid-id="1" class="box"></div>
@@ -20,9 +16,15 @@
                 <div id="seven" data-grid-id="7" class="box"></div>
                 <div id="eight" data-grid-id="8" class="box"></div>
             </div>
+             <div id="choice">
+                <h1>X or O ?</h1>
+                <button id="x">X</button>
+                <button id="o">O</button>
+            </div> 
             <div id="finished">
                 <h1>Game Over</h1>
                 <h4 id="finishedTarget"></h4>
+                <button id="reset">Reset</button>
             </div>
         </div>
         <script src="app.js"></script>

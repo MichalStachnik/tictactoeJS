@@ -1,6 +1,10 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Avenir';
+}
+body{
+    background: #243e50;
 }
 #app{
     width: 600px;
@@ -12,21 +16,88 @@
     display: flex;
     flex-wrap: wrap;
     height: 100%;
+    background: #ECF0F1;
 }
 #finished{
     text-align: center;
     position: relative;
-    top: 20vh;
+    top: -60vh;
+    height: 100%;
+    background: rgba(255, 190, 122, 0.8);
+    color: #5498DB;
+    transition: top 1s;
 }
 #finished.active{
-    top: -35vh;
-    transition: top .75s;
+    top: -120vh;
+    transition: top 1s;
 }
-#grid.none{
-    display: none;
+#choice{
+    position: relative;
+    background: rgba(255, 190, 122, 0.8);
+    height: 100%;
+    top: -60vh;
+    text-align: center;
+    color: #5498DB;
+}
+#choice.isDone{
+    top: -120vh;
+    transition: top 1s;
+}
+#x, #o, #reset{
+    background: #ECF0F1;
+    color: rgb(255, 190, 122);
+    width: 15%;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+    top: 20vh;
+    border: 2px solid #ECF0F1;
+    font-size: 16;
+}
+#x:hover, #o:hover, #reset:hover{
+    color: #ECF0F1;
+    background: #5498DB;
+}
+#x:focus, #o:focus, #reset:focus{
+    outline: none;
+    border-color: rgb(255, 157, 69);
 }
 .box{
     width: 33.33333%;
+    height: 33.33333%;
     box-sizing: border-box;
-    border: 1px solid lightseagreen;
+    cursor: pointer;
+    color: #E83D4A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5em;
+}
+#zero{
+    border-right: 2px solid #5498DB;
+    border-bottom: 2px solid #5498DB;
+}
+#one{
+    border-bottom: 2px solid #5498DB;
+}
+#two{
+    border-left: 2px solid #5498DB;
+    border-bottom: 2px solid #5498DB;
+}
+#three{
+    border-right: 2px solid #5498DB;
+}
+#five{
+    border-left: 2px solid #5498DB;
+}
+#six{
+    border-top: 2px solid #5498DB;
+    border-right: 2px solid #5498DB;
+}
+#seven{
+    border-top: 2px solid #5498DB;
+}
+#eight{
+    border-left: 2px solid #5498DB;
+    border-top: 2px solid #5498DB;
 }
